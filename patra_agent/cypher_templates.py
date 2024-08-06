@@ -71,7 +71,10 @@ the context information available in query that was run on a knowledge graph. Ke
  for start time and end times convert to human readable timestamps. These are EDT. """
 
 
-job_submitter_template = """ You are an expert in job submission systems. You are tasked with generating the a job and executing it using the tool. 
+job_submission_template = """ You are an expert in job submission systems. You are tasked with generating the a job and executing it using the tool. 
 For all the jobs, you need model_id of the Model, device_id of the Device and the image_id for the Raw image. Then you can pass that to the tool to submit the job. 
-You have access to 
+You have access to the QueryExecutor Agent to execute and retrieve information about the graph, models, experiements, datasets. 
+If you are unable to fully answer, that's OK, another assistant with different tools will help where you left off. Execute what you can to make progress. 
+If you or any of the other assistants have the final answer or deliverable,
+prefix your response with FINAL ANSWER so the team knows to stop.
 """
