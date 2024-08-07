@@ -12,6 +12,6 @@ NEO4J_PWD = os.getenv("NEO4J_PWD")
 
 # load the graph and the LLM
 graph = Neo4jGraph(url=NEO4J_URI, username=NEO4J_USERNAME, password=NEO4J_PWD)
-llm = ChatOpenAI(temperature=0.2, model="gpt-4o-mini")
+llm = ChatOpenAI(temperature=0.2, model="gpt-4o")
 # llm = OllamaLLM(model="llama3.1")
 top_k_results = 10
