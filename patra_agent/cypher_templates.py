@@ -30,6 +30,10 @@ Models have a '-model' in their id. Do not drop it when querying the database.
 For example you can retrieve the deployment for a given model with the lowest power consumption as follows. 
 MATCH (d:Deployment)-[r:HAS_DEPLOYMENT]-(m:Model {{model_id: '6d1f6b1c-2be4-428b-b9c2-8c9f1668e106-model'}}) RETURN d, d.total_gpu_power_consumption AS gpu_power_consumption ORDER BY gpu_power_consumption ASC LIMIT 1"
 
+For retrieving information about the best deployment accuracy refer to the average_accuracy in the deployment.
+Here's an example query to retrieve the model with highest(best) deployment accuracy on a device type raspi-3
+MATCH (d:Deployment {{device_type: 'raspi-3'}})-[r:HAS_DEPLOYMENT]-(m:Model) RETURN m, d, d.average_accuracy AS average_accuracy ORDER BY average_accuracy DESC LIMIT 1
+
 To get information about a modelCard from a model you can use:
 MATCH (m:Model {{model_id: '33232113' }})-[r2:USED]-(mc:ModelCard) return mc
 
@@ -53,7 +57,7 @@ an example:
 MATCH (img:RawImage)-[r2:PROCESSED_BY]-(e:Experiment)-[r:EXECUTED_ON]-(d:EdgeDevice) 
 RETURN img
 
-You can calculate the average probability of an experiment using this example:
+You can calculate the average probability (average accuracy) of an experiment using this example:
 MATCH (u:User)-[r:SUBMITTED_BY]-(e:Experiment)-[p:PROCESSED_BY]-(i:RawImage)
 WITH p, apoc.convert.fromJsonList(p.scores) AS scores
 UNWIND scores AS score
@@ -62,10 +66,15 @@ RETURN avg(max_probability) AS average_max_probability
 
 external_id in certain nodes refer to the node ids. These must be returned with results. 
 
-You can use fulltext search to query the knowledge graph for ModelCards as following:
-This returns the model card ids if there are hits for the Query.
-CALL db.index.fulltext.queryNodes("mcFullIndex", "Query") YIELD node, score
-RETURN node.external_id, node.name, node.version
+To get deployment information about model deployments you can use deployment node.
+For deployment location, you can use the location field in EdgeDevice. 
+There is no explicit connection between the edgeDevice and the model. You have to go through the Deployment node.
+Example: to find models deployed in raspi-3 device types in ohio-zoo location you can use:
+match (m:Model)-[:HAS_DEPLOYMENT]-(depl:Deployment)-[:DEPLOYED_IN]-(device:EdgeDevice {{location:'ohio-zoo', device_type: 'raspi3'}})
+ return m, depl.device_type, depl.average_accuracy, device.location, device.device_id
+
+available model types for Model are [convolutional neural network, large language model, foundational model]. These are case sensitive.
+
 """
 
 answer_generator_template = """You are tasked with generating a response to the question using 
@@ -94,5 +103,7 @@ patra_agent_template ="""You are an helpful AI assistant that's helping to under
                 You are really good at figuring out which questions to ask in which order to answer the original question. 
                 Looking at the history, ask questions get the answers and solve the original question.
                 
+                The model id contains '-model' do not drop that when querying. 
+                If the returned tool result is empty, rephrase the question and try again.
                 If you are satisfied with the response to the original user query, say FINAL ANSWER in the response.
                  """
