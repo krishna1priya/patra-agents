@@ -2,7 +2,7 @@ from langchain_core.prompts import PromptTemplate, ChatPromptTemplate, MessagesP
 from patra_agent.util import llm
 
 
-def create_agent(tools, template: str, system_message: str):
+def create_agent(tools, template: str, system_message: str, llm=llm):
     """Create an agent."""
     prompt = ChatPromptTemplate.from_messages(
         [
