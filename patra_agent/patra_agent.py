@@ -27,6 +27,6 @@ patra_agent_template = """You are an helpful AI assistant that's helping to unde
 patra_executor = create_agent(
     [print_hello],
     template=patra_agent_template,
-    system_message="Return a single question in english for the query_agent",
+    system_message="Return a single question in english",
     llm=llm
 )

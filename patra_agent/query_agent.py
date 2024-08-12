@@ -14,7 +14,7 @@ class QueryGenerator(BaseModel):
 
 query_agent_prompt = """You are an expert in writing Cypher queries for a Neo4j database. 
 Write Cypher queries that avoid using directional edges. Instead of using arrows (-> or <-) for relationships, 
-use undirected relationships by using double hyphens (--) and specify the relationship type within square brackets.
+use undirected relationships.
 Make sure that all relationships in the queries are undirected, 
 using double hyphens and square brackets to specify the relationship type.
 Only return the cypher query
