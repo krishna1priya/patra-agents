@@ -1,5 +1,4 @@
 from langchain.agents import create_tool_calling_agent, AgentExecutor
-from langchain_core.pydantic_v1 import BaseModel, Field
 from langchain_core.prompts import PromptTemplate, ChatPromptTemplate, MessagesPlaceholder
 from patra_agent.util import llm, graph
 from patra_agent.tools import execute_cypher

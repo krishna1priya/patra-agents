@@ -71,22 +71,22 @@ patra = StateGraph(PatraState)
 patra.graph_schema = str(graph.get_structured_schema)
 
 # Add nodes
-patra.add_node(PATRA_AGENT_NAME, patra_node)
+# patra.add_node(PATRA_AGENT_NAME, patra_node)
 patra.add_node(DB_AGENT_NAME, execute_query_node)
 patra.add_node(QUERY_AGENT_NAME, cypher_generator_node)
 
 # Set entry point
-patra.set_entry_point(PATRA_AGENT_NAME)
+patra.set_entry_point(QUERY_AGENT_NAME)
 
 # QueryAgent can interact with DBAgent multiple times
 patra.add_edge(QUERY_AGENT_NAME, DB_AGENT_NAME)
-patra.add_edge(DB_AGENT_NAME, PATRA_AGENT_NAME)
+patra.add_edge(DB_AGENT_NAME, END)
 
-patra.add_conditional_edges(
-    PATRA_AGENT_NAME,
-    router,
-    {"continue": QUERY_AGENT_NAME, "__end__": END},
-)
+# patra.add_conditional_edges(
+#     PATRA_AGENT_NAME,
+#     router,
+#     {"continue": QUERY_AGENT_NAME, "__end__": END},
+# )
 
 # Compile the graph
 app = patra.compile()
@@ -98,7 +98,10 @@ def run_patra_graph(question):
     #     "sender": "human",
     #     "graph_schema": str(graph.get_structured_schema),
     # })
-    inputs = {"messages": [HumanMessage(content=question)]}
+    inputs = {
+        "messages": [HumanMessage(content=question)],
+        "sender": "human"
+    }
     for chunk in app.stream(inputs, stream_mode="values"):
         chunk["messages"][-1].pretty_print()
 
