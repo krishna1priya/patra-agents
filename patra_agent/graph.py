@@ -8,10 +8,18 @@ from patra_agent.db_agent import db_executor
 from patra_agent.patra_agent import patra_executor
 from typing import Literal
 
+import tiktoken
+
+tokenizer = tiktoken.get_encoding("cl100k_base")
 
 PATRA_AGENT_NAME = "patra_agent"
 QUERY_AGENT_NAME = "query_agent"
 DB_AGENT_NAME = "db_executor"
+
+
+def count_tokens(text: str) -> int:
+    tokens = tokenizer.encode(text)
+    return len(tokens)
 
 
 def patra_node(state: PatraState) -> PatraState:

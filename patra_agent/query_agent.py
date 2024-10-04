@@ -1,6 +1,14 @@
 from pydantic import BaseModel, Field
 from langchain_core.prompts import PromptTemplate, ChatPromptTemplate
 from patra_agent.util import llm, graph
+from langchain.chains import LLMChain
+from langchain.schema import BaseOutputParser
+import json
+from langchain_core.runnables import RunnableBinding
+from langchain_core.runnables import RunnableSequence
+from langchain_core.output_parsers.openai_tools import PydanticToolsParser
+
+
 
 class QueryGenerator(BaseModel):
     """ Use this class to structure the output for the query"""
@@ -77,9 +85,84 @@ external_id in certain nodes refer to the node ids. These must be returned with 
 query_kg_prompt = ChatPromptTemplate.from_messages(
     [
         ("system", query_agent_prompt),
-        ("human", "Only return the cypher query for the question: \n {question} \n Schema: {graph_schema}.",
-        ),
+        ("human", """Only return the cypher query for the question: \n {question} \n Schema: {graph_schema}.
+         Format your response as a JSON object with the following structure:
+        {{
+            "cypher_query": "Your Cypher query here",
+            "context": "Any additional context or explanation about the query"
+        }}
+        Ensure that your entire response is valid JSON."""),
+
     ]
 )
-query_agent_llm = llm.with_structured_output(QueryGenerator)
-query_generator = query_kg_prompt | query_agent_llm
+
+class CustomOutputParser(BaseOutputParser):
+    def parse(self,text: str) -> QueryGenerator:
+      print("Parsing output...")
+      print(f"Raw output: {text}")
+      try:
+          parsed = json.loads(text)
+          return QueryGenerator(**parsed)
+      except json.JSONDecodeError:
+          query_start = text.lower().find("match")
+          return_start = text.lower().find("return")
+          if query_start != -1 and return_start != -1:
+              query = text[query_start:].strip()
+              context = "Extracted query from non-JSON response. Please verify."
+              return QueryGenerator(
+                  cypher_query=query,
+                  context=context
+              )
+          else:
+              raise ValueError(f"Failed to parse response. Raw output: {text}")
+
+  
+# query_agent_llm = llm.with_structured_output(QueryGenerator)
+
+query_generator = RunnableSequence(
+    first = query_kg_prompt,
+    middle = [
+    RunnableBinding(
+        bound=llm,
+        kwargs={
+            'tools': [
+                {
+                    'type': 'function',
+                    'function': {
+                        'name': 'QueryGenerator',
+                        'description': 'Use this class to structure the output for the query',
+                        'parameters': {
+                            'properties': {
+                                'cypher_query': {
+                                    'description': 'Syntactically correct cypher query ready for execution',
+                                    'type': 'string'
+                                },
+                                'context': {
+                                    'description': 'Context about the query',
+                                    'type': 'string'
+                                }
+                            },
+                            'required': ['cypher_query', 'context'],
+                            'type': 'object'
+                        }
+                    }
+                }
+            ],
+            'parallel_tool_calls': False,
+            'tool_choice': {
+                'type': 'function',
+                'function': {
+                    'name': 'QueryGenerator'
+                }
+            }
+        },
+        config={},
+        config_factories=[]
+    )
+    ],
+    last=CustomOutputParser()
+    # last = PydanticToolsParser(
+    # first_tool_only=True,
+    # tools=[QueryGenerator]
+    # )
+)
