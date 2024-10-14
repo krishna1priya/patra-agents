@@ -1,0 +1,86 @@
+QUERY,RESPONSE
+How many models are there in the system?,The number of models in the system is 100.
+How many edge devices are there in the system?,NumberOfEdgeDevices: 10
+What is the framework was used for model with model ID 888a1c63-2d03-478d-92b9-b371c752306e-model,The framework used for the model with model ID `888a1c63-2d03-478d-92b9-b371c752306e-model` is `tensorflow`.
+What is the accuracy of the model with model ID 888a1c63-2d03-478d-92b9-b371c752306e-model?,The accuracy of the model with model ID `888a1c63-2d03-478d-92b9-b371c752306e-model` is 0.5686.
+What are the 5 models most closely resembling the one with ID e835e0f3-3c13-4ab8-9b17-a8c5ea8dc788?,It appears that there are no models closely resembling the one with ID `e835e0f3-3c13-4ab8-9b17-a8c5ea8dc788` based on the given query. The result set is empty.
+How many edge devices are there in the system?,NumberOfEdgeDevices: 10
+What is the architecture of edge device?,"The architecture of the edge device is as follows: - CPU Architecture: ARM Cortex-A57
+- GPU Architecture: Nvidia Maxwell"
+Does the edge device with Device ID: jetson-nano-1 support AI operations ?,"The edge device with Device ID: jetson-nano-1 supports the following AI operations: - Machine Learning: True
+- Computer Vision: True
+- Deep Learning: True"
+What type of model is it?,The type of model is: dnn
+What is the name of the model with model ID 888a1c63-2d03-478d-92b9-b371c752306e-model?,"The name of the model with model ID 888a1c63-2d03-478d-92b9-b371c752306e-model is ""UCI Adult tensorflow model""."
+Who is the owner of the model with model ID 888a1c63-2d03-478d-92b9-b371c752306e-model?,Owner: Sachith Withana Model Count: 100
+Who owns most of the models?,Number of Model Cards written by Sachith: 0
+"Who is the author of the model card named, UCI Adult Data Analysis?","The author of the model card named ""UCI Adult Data Analysis"" is Sachith Withana."
+How many unique device types are present in the database?,The number of unique device types present in the database is 7
+Which model trained on the UCI Adult Dataset has the lowest demographic parity?,There are no models trained on the UCI Adult Dataset with demographic parity information available in the database.
+What are the explainability metrics for model ID 3075715e-bac0-4783-bff9-4d8ea6a5f638?,No explainability metrics were found for the model with ID 3075715e-bac0-4783-bff9-4d8ea6a5f638.
+Which model deployed in SF-zone-02 has the highest fairness score?,There are no models deployed in SF-zone-02 with a recorded fairness score.
+"List the top 3 models most similar to the one with ID e835e0f3-3c13-4ab8-9b17-a8c5ea8dc788.""",It appears that there are no models closely resembling the one with ID `e835e0f3-3c13-4ab8-9b17-a8c5ea8dc788` based on the given query. The result set is empty.
+What are the 5 models most closely resembling the one with ID e835e0f3-3c13-4ab8-9b17-a8c5ea8dc788?,"There are no models trained on the ""UCI Adult Dataset"" dataset with an equalized odds score in the database"
+Which database is used for this datastorage?,The database used for data storage is the UCI Machine Learning Repository.
+What do you know about UCI Machine Learning Repository?,There is no information available in the database regarding the UCI Machine Learning Repository.
+How many model cards are present in the system?,The number of model cards present in the system is 100.
+Name the model cards are present in the system?,"The model cards present in the system are: 1. Name: UCI Adult Data Analysis					
+- External ID: 888a1c63-2d03-478d-92b9-b371c752306e					
+- External ID: dc1b2d2c-1e50-4107-a9d9-9019f8737a1e					
+- External ID: c6f13586-d926-4ee5-81d8-36f3fc9d6d53					
+- External ID: 79fdf2fc-d188-4ff5-8cba-04f5ee44d582					
+- External ID: fab5ded2-9772-40a5-919b-fe2f7f73554f					
+- External ID: 85d2f849-ba3d-4b61-b6fc-01e1b2e78381					
+- External ID: 2994bd5b-a0ab-4944-bb86-5428372d707b					
+- External ID: d3a5d6bc-0fd8-4196-86a7-527344e9f9c7					
+- External ID: 91652224-0abf-43d5-a2d4-5322dd93324a					
+- External ID: 712c305a-edc1-4f93-a9f6-a2a9ed46fdbd					
+					
+All the model cards listed have the same name ""UCI Adult Data Analysis"" but different external IDs.					"
+How many bias analysis are present in UCI Adult Data Analysis?,The UCI Adult Data Analysis contains 100 bias analyses.
+Explain the role of bias analysis are present in UCI Adult Data Analysis?,"Here are the results of the bias analysis present in the UCI Adult Data Analysis: 1. Bias Analysis Name: 888a1c63-2d03-478d-92b9-b371c752306ebias_analysis			
+- Equal Odds Difference: -0.38592193507291395			
+- Demographic Parity Difference: -0.7427209676517443			
+			
+2. Bias Analysis Name: dc1b2d2c-1e50-4107-a9d9-9019f8737a1ebias_analysis			
+- Equal Odds Difference: 0.20717470912296454			
+- Demographic Parity Difference: 0.4378977744916004			
+			
+3. Bias Analysis Name: c6f13586-d926-4ee5-81d8-36f3fc9d6d53bias_analysis			
+- Equal Odds Difference: -0.5086674100030553			
+- Demographic Parity Difference: 0.17927570355913902			
+			
+4. Bias Analysis Name: 79fdf2fc-d188-4ff5-8cba-04f5ee44d582bias_analysis			
+- Equal Odds Difference: 0.7055584786768379			
+- Demographic Parity Difference: 0.3282012630379796			
+			
+5. Bias Analysis Name: fab5ded2-9772-40a5-919b-fe2f7f73554fbias_analysis			
+- Equal Odds Difference: 0.028658147176958915			
+- Demographic Parity Difference: 0.8626397921038969			
+			
+6. Bias Analysis Name: 85d2f849-ba3d-4b61-b6fc-01e1b2e78381bias_analysis			
+- Equal Odds Difference: 0.18192152063385691			
+- Demographic Parity Difference: -0.7520147625325433			
+			
+7. Bias Analysis Name: 2994bd5b-a0ab-4944-bb86-5428372d707bbias_analysis			
+- Equal Odds Difference: -0.014920960951974482			
+- Demographic Parity Difference: -0.8601973629014363			
+			
+8. Bias Analysis Name: d3a5d6bc-0fd8-4196-86a7-527344e9f9c7bias_analysis			
+- Equal Odds Difference: 0.3604834160059023			
+- Demographic Parity Difference: 0.6226478012212282			
+			
+9. Bias Analysis Name: 91652224-0abf-43d5-a2d4-5322dd93324abias_analysis			
+- Equal Odds Difference: -0.6752893446641788			
+- Demographic Parity Difference: -0.7529788506512234			
+			
+10. Bias Analysis Name: 712c305a-edc1-4f93-a9f6-a2a9ed46fdbdbias_analysis			
+- Equal Odds Difference: 0.5284665848391445			
+- Demographic Parity Difference: 0.3863144200823927			"
+Name the edge device in the system?,Nvidia Jetson Nano
+Which bias analysis has the lowest demographic parity difference?,"The bias analysis with the lowest demographic parity difference is as follows: - Name: 7e110269-8e1d-4a2c-b4db-c713b292d511bias_analysis		
+- External ID: 7e110269-8e1d-4a2c-b4db-c713b292d511-bias		
+- Demographic Parity Difference: -0.9818984619471309		
+- Equal Odds Difference: -0.3787884779765942		"
+How many deployements are made for model ID 888a1c63-2d03-478d-92b9-b371c752306e-model?,"The number of deployments made for the model with ID ""888a1c63-2d03-478d-92b9-b371c752306e-model"" is 0."
+Name the datasheet?,"The datasheet name is ""UCI Adult Dataset""."
