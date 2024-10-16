@@ -7,7 +7,9 @@ from patra_agent.util import graph, top_k_results
 from patra_agent.db_agent import db_executor
 from patra_agent.patra_agent import patra_executor
 from typing import Literal
-
+import io 
+import sys
+import re
 
 PATRA_AGENT_NAME = "patra_agent"
 QUERY_AGENT_NAME = "query_agent"
@@ -102,7 +104,27 @@ def run_patra_graph(question):
         "messages": [HumanMessage(content=question)],
         "sender": "human"
     }
+    output  = []
     for chunk in app.stream(inputs, stream_mode="values"):
-        chunk["messages"][-1].pretty_print()
+    #   chunk["messages"][-1].pretty_print()   
+    #   message = chunk["messages"][-1].pretty_print()
+        captured_output = io.StringIO()           
+        sys.stdout = captured_output                
+        sys.stdout = sys.__stdout__               
+        
+        message = captured_output.getvalue().strip()  
+        output.append(message) 
+    capture = False
+    cleaned_output = ""
 
-    return ""
+    for message in output:
+        if "Name: db_executor" in message:
+            capture = True
+           
+        if capture:
+            message_cleaned = re.sub(r"={10,}", "", message) 
+            message_cleaned = re.sub(r"(Ai Message\s*|Name:\s+db_executor\s*)", "", message_cleaned).strip()  
+            cleaned_output = message_cleaned
+            break                         
+
+    return cleaned_output                  
