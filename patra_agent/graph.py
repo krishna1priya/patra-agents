@@ -106,10 +106,9 @@ def run_patra_graph(question):
     }
     output  = []
     for chunk in app.stream(inputs, stream_mode="values"):
-    #   chunk["messages"][-1].pretty_print()   
-    #   message = chunk["messages"][-1].pretty_print()
         captured_output = io.StringIO()           
-        sys.stdout = captured_output                
+        sys.stdout = captured_output              
+        chunk["messages"][-1].pretty_print()      
         sys.stdout = sys.__stdout__               
         
         message = captured_output.getvalue().strip()  
